@@ -1,8 +1,8 @@
 #!/usr/bin/python
-
-import os
-import periscope
-import datetime
+ 
+import os 
+import periscope 
+import datetime 
 
 now = str(datetime.datetime.now())[:16]
 
