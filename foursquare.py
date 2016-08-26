@@ -19,6 +19,7 @@ json_file = 'data/foursqure-checkins.json'
 csv_file = 'data/foursquare-location-history.csv'
 
 excel_file = 'data/foursquare-location-history.xls'
+excel_file2 = 'data/foursquare-location-history-unique.xls'
 
 # api endpoint to download your checkin history
 url_template = 'https://api.foursquare.com/v2/users/self/checkins?limit=250&v=20160104&offset={}&oauth_token={}'
@@ -60,7 +61,6 @@ for response in data:
             rows.append(checkin)
         except:
             print "error: ", checkin
-            pass
        
 df_full = pd.DataFrame(rows)
 
@@ -68,9 +68,15 @@ df_full = pd.DataFrame(rows)
 df_full['datetime'] = df_full['created_at'].map(lambda x: dt.fromtimestamp(x).strftime('%d/%m/%Y %H:%M'))
 df_full = df_full.drop('created_at', axis=1)
 
-df_full['gmap'] 
+#Ordeno las columnas del dataframe
+df_full = df_full[['datetime', 'venue_name', 'shout', 'city', 'state', 'country', 'gmap']]
+
 df_full.to_csv(csv_file, index=False, encoding='utf-8', sep=",")
 df_full.to_excel(excel_file,index=False, encoding='utf-8')
+
+# remove multiple check-ins at the same location
+df_unique = df_full.drop_duplicates(subset=['venue_name',], keep='last').copy()
+df_unique.to_excel(excel_file2,index=False, encoding='utf-8')
 
 # gauth = GoogleAuth()
 # gauth.LocalWebserverAuth()
