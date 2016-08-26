@@ -12,13 +12,14 @@ from datetime import datetime as dt
 # from mpl_toolkits.basemap import Basemap
 from keys import foursquare_oauth_token 
 
+
 # the json file will contain the entire downloaded check-ins data set
 json_file = 'data/foursqure-checkins.json'
 
 # the csv file will contain the cleaned data used for subsequent analysis
 csv_file = 'data/foursquare-location-history.csv'
 
-excel_file = 'data/foursquare-location-history.xls'
+excel_file = 'data/foursquare-location-history.xlsx'
 excel_file2 = 'data/foursquare-location-history-unique.xls'
 
 # api endpoint to download your checkin history
@@ -69,14 +70,18 @@ df_full['datetime'] = df_full['created_at'].map(lambda x: dt.fromtimestamp(x).st
 df_full = df_full.drop('created_at', axis=1)
 
 #Ordeno las columnas del dataframe
-df_full = df_full[['datetime', 'venue_name', 'shout', 'city', 'state', 'country', 'gmap']]
+df_full = df_full[['datetime', 'venue_name', 'shout', 'category', 'city', 'state', 'country', 'gmap']]
 
+writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
+                        
 df_full.to_csv(csv_file, index=False, encoding='utf-8', sep=",")
-df_full.to_excel(excel_file,index=False, encoding='utf-8')
+df_full.to_excel(writer,sheet_name='todos',index=False, encoding='utf-8')
 
 # remove multiple check-ins at the same location
 df_unique = df_full.drop_duplicates(subset=['venue_name',], keep='last').copy()
-df_unique.to_excel(excel_file2,index=False, encoding='utf-8')
+df_unique.to_excel(writer,sheet_name='unicos',index=False, encoding='utf-8')
+
+writer.save()
 
 # gauth = GoogleAuth()
 # gauth.LocalWebserverAuth()
