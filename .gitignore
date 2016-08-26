@@ -227,3 +227,4 @@ keys.py
 *.json
 *.csv
 *.xls
+*.xlsx

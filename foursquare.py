@@ -20,7 +20,6 @@ json_file = 'data/foursqure-checkins.json'
 csv_file = 'data/foursquare-location-history.csv'
 
 excel_file = 'data/foursquare-location-history.xlsx'
-excel_file2 = 'data/foursquare-location-history-unique.xls'
 
 # api endpoint to download your checkin history
 url_template = 'https://api.foursquare.com/v2/users/self/checkins?limit=250&v=20160104&offset={}&oauth_token={}'
