@@ -46,9 +46,9 @@ for response in data:
         try:
             checkin = {}
             checkin['venue_name'] = item['venue']['name']
+            checkin['url'] = 'https://foursquare.com/v/%s' % (item['venue']['id'],)
             checkin['created_at'] = item['createdAt']
-            checkin['gmap'] = 'http://maps.google.com/?q={},{}' .format(item['venue']['location']['lat'],item['venue']['location']['lng'])
-            
+    
             if len(item['venue']['categories']) > 0:
                 checkin['category'] = item['venue']['categories'][0]['name']
                 
@@ -69,7 +69,7 @@ df_full['datetime'] = df_full['created_at'].map(lambda x: dt.fromtimestamp(x).st
 df_full = df_full.drop('created_at', axis=1)
 
 #Ordeno las columnas del dataframe
-df_full = df_full[['datetime', 'venue_name', 'shout', 'category', 'city', 'state', 'country', 'gmap']]
+df_full = df_full[['datetime', 'venue_name', 'shout', 'category', 'city', 'state', 'country', 'url']]
 
 writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
                         
