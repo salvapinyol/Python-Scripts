@@ -228,3 +228,4 @@ keys.py
 *.csv
 *.xls
 *.xlsx
+.idea/
