@@ -1,7 +1,7 @@
 #!/usr/local/Zope-2.6.2/bin/python
 # Script que se patea la BD de rtg
 # e inserta los errores en la tabla errores
-# Modificación creada en pull request1.
+# Modificación creada en pull request2
 import MySQLdb
 
 db= MySQLdb.connect(host="localhost",user="snmp",passwd="rtgdefault",db="rtg")
@@ -58,7 +58,7 @@ for interface in result:
 			ifBECN=errores[0]
 	except:
       		ifBECN=0
-	# Modificación creada en pull request1.
+	# Modificación creada en pull request2
 	if (ifInErrors+ifOutErrors+ifInDiscards+ifOutDiscards+ifBECN+ifFECN)>0:
 #		print interface[2],"-->",ifInErrors,ifOutErrors,ifInDiscards,ifOutDiscards
 		try:
